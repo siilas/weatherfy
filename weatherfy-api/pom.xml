@@ -115,6 +115,11 @@
 					<includeTestSourceDirectory>true</includeTestSourceDirectory>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.9</version>
+			</plugin>
 		</plugins>
 	</build>
 
