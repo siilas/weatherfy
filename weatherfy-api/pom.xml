@@ -124,7 +124,6 @@
 					</execution>
 				</executions>
 				<configuration>
-					<excludes>**/WeatherfyApplication.*</excludes>
 					<configLocation>../checkstyle.xml</configLocation>
 					<includeTestSourceDirectory>true</includeTestSourceDirectory>
 				</configuration>

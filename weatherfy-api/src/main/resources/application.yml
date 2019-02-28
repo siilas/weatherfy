@@ -1,0 +1,21 @@
+# App
+spring:
+   application:
+      name: weatherfy
+         
+server:
+   port: 8080
+
+# Spotify
+spotify: 
+   app:
+      api: https://api.spotify.com
+      auth: https://accounts.spotify.com
+      client-id: a6550dc64f2b475ca30ccbc264e880c7
+      client-secret: 9ecf6275eae44ceaaf291db65ffac40a
+
+# OpenWeatherMap
+openweathermap:
+   app:
+      host: http://api.openweathermap.org
+      id: 2ab5374ec04969d8a11cd7bea88885e0

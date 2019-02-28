@@ -12,10 +12,9 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 public class LocalDateTimeDeserializer extends JsonDeserializer<LocalDateTime> {
 
 	@Override
-	public LocalDateTime deserialize(JsonParser parser, DeserializationContext context) 
+	public LocalDateTime deserialize(JsonParser value, DeserializationContext context) 
 			throws IOException, JsonProcessingException {
-		long value = parser.getLongValue();
-		return LocalDateTime.ofEpochSecond(value, 0, ZoneOffset.UTC);
+		return LocalDateTime.ofEpochSecond(value.getLongValue(), 0, ZoneOffset.UTC);
 	}
 
 }

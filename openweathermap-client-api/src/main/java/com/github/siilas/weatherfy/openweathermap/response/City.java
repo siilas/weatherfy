@@ -9,7 +9,7 @@ import com.github.siilas.weatherfy.openweathermap.deserializer.LocalDateTimeDese
 import lombok.Data;
 
 @Data
-public class CityResponse {
+public class City {
 
 	private String name;
 

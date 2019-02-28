@@ -12,4 +12,8 @@ public final class HttpStatusUtils {
 		return response.getStatusCodeValue() == 404;
 	}
 	
+	public static boolean isNotSuccess(ResponseEntity<?> response) {
+	    return response.getStatusCodeValue() != 200;
+	}
+	
 }

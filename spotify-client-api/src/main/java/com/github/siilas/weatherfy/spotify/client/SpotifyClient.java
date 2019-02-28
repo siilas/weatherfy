@@ -1,42 +1,53 @@
 package com.github.siilas.weatherfy.spotify.client;
 
-import java.nio.charset.Charset;
+import static com.github.siilas.weatherfy.core.http.HttpAuthUtils.getAuth;
+import static com.github.siilas.weatherfy.core.http.HttpAuthUtils.getToken;
+import static com.github.siilas.weatherfy.core.http.HttpStatusUtils.isNotSuccess;
 
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import com.github.siilas.weatherfy.spotify.config.SpotifyConfig;
+import com.github.siilas.weatherfy.spotify.exception.AuthenticationException;
+import com.github.siilas.weatherfy.spotify.exception.NoTracksFoundException;
 import com.github.siilas.weatherfy.spotify.model.Genre;
+import com.github.siilas.weatherfy.spotify.response.Authentication;
+import com.github.siilas.weatherfy.spotify.response.Tracks;
 
 @Component
 public class SpotifyClient {
 
-	@Value("${spotify.app.host}")
-	private String host;
+    @Autowired
+    private RestTemplate restTemplate;
 
-	@Value("${spotify.app.client.id}")
-	private String clienteId;
+    @Autowired
+    private SpotifyConfig spotifyConfig;
 
-	@Value("${spotify.app.client.secret}")
-	private String clientSecret;
+    @Cacheable("tracks")
+    public Tracks getMusicByGenre(Genre genre) {
+        Authentication auth = authorization();
+        String url = spotifyConfig.getApi().concat("/v1/recommendations?market=BR")
+                .concat("&seed_genres=").concat(genre.getValue())
+                .concat("&limit=10");
+        ResponseEntity<Tracks> tracks = restTemplate.exchange(url, HttpMethod.GET, getAuth(auth.getToken()), Tracks.class);
+        if (isNotSuccess(tracks)) {
+            throw new NoTracksFoundException();
+        }
+        return tracks.getBody();
+    }
 
-	@Autowired
-	private RestTemplate restTemplate;
-
-	public String getMusicByGenre(Genre genre) {
-		String url = host.concat("/v1/recommendations?market=BR").concat("&seed_genres=").concat(genre.getValue())
-				.concat("&limit=10");
-		HttpHeaders headers = new HttpHeaders();
-		String auth = clienteId + ":" + clientSecret;
-		byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("US-ASCII")));
-		String authHeader = "Basic " + new String(encodedAuth);
-		headers.set("Authorization", authHeader);
-		return restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<String>(headers), String.class).getBody();
-	}
+    public Authentication authorization() {
+        String url = spotifyConfig.getAuth().concat("/api/token");
+        ResponseEntity<Authentication> auth = restTemplate.exchange(url, HttpMethod.POST,
+                getToken(spotifyConfig.getAuthentication()), Authentication.class);
+        if (isNotSuccess(auth)) {
+            throw new AuthenticationException();
+        }
+        return auth.getBody();
+    }
 
 }
