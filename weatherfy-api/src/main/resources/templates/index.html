@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		
+		<link rel="shortcut icon" href="images/favicon.png" />
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/styles.css" />
+		
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/scripts.js"></script>
+		
+		<title>Weatherfy</title>
+	</head>
+	<body>
+		<div class="container text-center">
+			<div>
+				<img src="images/logo.png" class="img-fluid mt-5" alt="Weatherfy" />
+				<h1 class="mt-4 font-weight-bold">Weatherfy</h1>
+				<h3 class="mt-2">Olá! O Weatherfy é uma API que sugere músicas do Spotify de acordo com a temperatura da cidade requisitada.</h3>
+			</div>
+			<div>
+				<div class="mt-5">
+ 					<select class="custom-select text-center" id="choice-method" onchange="showForm()">
+					   <option value="" selected>Escolha o método de busca</option>
+					   <option value="NAME">Nome</option>
+					   <option value="LAT_AND_LONG">Latitude e Longitude</option>
+ 					</select>
+				</div>
+			</div>
+			<div id="form-name" style="display: none;">
+				<form>
+				
+				</form>
+			</div>
+			<div id="form-lat-and-long" style="display: none;">
+				<form>
+				
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
