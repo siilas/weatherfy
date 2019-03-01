@@ -23,12 +23,17 @@ public class OpenWeatherMapClient {
 	@Autowired
 	private OpenWeatherMapConfig config;
 	
+	public static String getPath() {
+	    return "/data/2.5/weather";
+	}
+	
 	@Cacheable("cities")
 	public Mono<City> getCityByName(String name) {
 		return webClient.get()
 				.uri(url -> url.host(config.getHost())
-						.scheme("http")
-						.path("/data/2.5/weather")
+						.scheme(config.getScheme())
+						.path(getPath())
+						.port(config.getPort())
 						.queryParam("q", name)
 						.queryParam("appid", config.getId())
 						.queryParam("units", "metric")
@@ -45,8 +50,9 @@ public class OpenWeatherMapClient {
 	public Mono<City> getCityByLatitudeAndLongitude(Double latitude, Double longitude) {
         return webClient.get()
 				.uri(url -> url.host(config.getHost())
-						.scheme("http")
-						.path("/data/2.5/weather")
+						.scheme(config.getScheme())
+						.path(getPath())
+						.port(config.getPort())
 						.queryParam("lat", latitude)
 						.queryParam("lon", longitude)
 						.queryParam("appid", config.getId())

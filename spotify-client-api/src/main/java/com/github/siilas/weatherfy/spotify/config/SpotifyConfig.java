@@ -12,8 +12,11 @@ import lombok.Setter;
 @ConfigurationProperties(prefix = "spotify.app")
 public class SpotifyConfig {
 
-    private String api;
-    private String auth;
+    private String apiHost;
+    private String apiPort;
+    private String authHost;
+    private String authPort;
+    private String scheme;
     private String clientId;
     private String clientSecret;
 

@@ -2,7 +2,7 @@ package com.github.siilas.weatherfy.api.service;
 
 import org.springframework.stereotype.Component;
 
-import com.github.siilas.weatherfy.api.exception.GenreNotFound;
+import com.github.siilas.weatherfy.api.exception.GenreNotFoundException;
 import com.github.siilas.weatherfy.openweathermap.response.Temperature;
 import com.github.siilas.weatherfy.spotify.model.Genre;
 
@@ -22,7 +22,7 @@ public class GenreSelectorService {
         if (temperature.isBelow10Degrees()) {
             return Genre.CLASSICAL;
         }
-        throw new GenreNotFound();
+        throw new GenreNotFoundException();
     }
 
 }

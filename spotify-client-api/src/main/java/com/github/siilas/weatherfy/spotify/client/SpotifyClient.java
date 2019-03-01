@@ -29,6 +29,14 @@ public class SpotifyClient {
     @Autowired
     private SpotifyConfig config;
 
+    public static String getAuthPath() {
+        return "/api/token";
+    }
+    
+    public static String getRecommendationsPath() {
+        return "/v1/recommendations";
+    }
+    
     @Cacheable("tracks")
     public Mono<Tracks> getMusicByGenre(Genre genre) {
         return authorization()
@@ -37,9 +45,10 @@ public class SpotifyClient {
     
     private Mono<Authentication> authorization() {
     	return webClient.post()
-	    		.uri(uri -> uri.host(config.getAuth())
-	    				.scheme("https")
-	    				.path("/api/token")
+	    		.uri(uri -> uri.host(config.getAuthHost())
+	    				.scheme(config.getScheme())
+	    				.path(getAuthPath())
+	    				.port(config.getAuthPort())
 	    				.build())
 	    		.header("Authorization", "Basic " + Base64.encodeBase64String(config.getAuthentication()))
 	    		.body(fromFormData("grant_type", "client_credentials"))
@@ -53,9 +62,10 @@ public class SpotifyClient {
     
     private Mono<Tracks> findTracks(Authentication auth, Genre genre) {
     	return webClient.get()
-	        	.uri(uri -> uri.host(config.getApi())
-	    				.scheme("https")
-	    				.path("/v1/recommendations")
+	        	.uri(uri -> uri.host(config.getApiHost())
+	    				.scheme(config.getScheme())
+	    				.path(getRecommendationsPath())
+	    				.port(config.getApiPort())
 	    				.queryParam("market", "BR")
 	    				.queryParam("limit", "10")
 	    				.queryParam("seed_genres", genre.getValue())

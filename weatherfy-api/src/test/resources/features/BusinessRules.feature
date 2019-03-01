@@ -5,46 +5,22 @@ Funcionalidade: Sugestões de músicas de acordo com a temperatura da cidade req
     de acordo com a temperatura deve-se sugerir músicas de um determinado gênero musical
 
 
-  Esquema do Cenário: Músicas para festa
-    Dado que o usuário busque pela "<cidade>"
-    E a temperatura esteja acima de 30 graus
+  Cenário: Músicas para festa
+    Dado que o usuário busque pela cidade "Araraquara"
+    E a temperatura esteja acima de 30.0 graus
     Então deve sugerir músicas para festa
 
-    Exemplos: 
-      | cidade     |
-      | Bauru      |
-      | Campinas   |
-      | Araraquara |
-
-  Esquema do Cenário: Músicas pop
-    Dado que o usuário busque pela "<cidade>"
-    E a temperatura esteja entre 15 e 30 graus
+  Cenário: Músicas pop
+    Dado que o usuário busque pela cidade "Bauru"
+    E a temperatura esteja entre 15.0 e 30.0 graus
     Então deve sugerir músicas pop
 
-    Exemplos: 
-      | cidade     |
-      | Bauru      |
-      | Campinas   |
-      | Araraquara |
-
-  Esquema do Cenário: Rock and Roll
-    Dado que o usuário busque pela "<cidade>"
-    E a temperatura esteja entre 10 e 14 graus
+  Cenário: Rock and Roll
+    Dado que o usuário busque pela cidade "Campinas"
+    E a temperatura esteja entre 10.0 e 14.0 graus
     Então deve sugerir rock and roll
 
-    Exemplos: 
-      | cidade     |
-      | Bauru      |
-      | Campinas   |
-      | Araraquara |
-
-  Esquema do Cenário: Música clássica
-    Dado que o usuário busque pela "<cidade>"
-    E a temperatura esteja abaixo de 10 graus
+  Cenário: Música clássica
+    Dado que o usuário busque pela cidade "Porto Alegre"
+    E a temperatura esteja abaixo de 10.0 graus
     Então deve sugerir música clássica
-
-    Exemplos: 
-      | cidade     |
-      | Bauru      |
-      | Campinas   |
-      | Araraquara |

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.siilas.weatherfy.api.response.TrackSuggestion;
 import com.github.siilas.weatherfy.api.service.GenreSelectorService;
+import com.github.siilas.weatherfy.core.exception.WeatherfyException;
 import com.github.siilas.weatherfy.openweathermap.client.OpenWeatherMapClient;
 import com.github.siilas.weatherfy.spotify.client.SpotifyClient;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
@@ -28,7 +29,7 @@ public class WeatherfyResource {
     private GenreSelectorService genreSelectorService;
 
     @GetMapping("/city/{city}")
-    @HystrixCommand(fallbackMethod = "fallback")
+    //@HystrixCommand(fallbackMethod = "fallback", ignoreExceptions = WeatherfyException.class)
     public Mono<TrackSuggestion> getByCity(@PathVariable String city) {
     	TrackSuggestion.Builder builder = new TrackSuggestion.Builder();
     	return openWeatherMapClient.getCityByName(city)
@@ -46,8 +47,8 @@ public class WeatherfyResource {
         		});
     }
 
-    @HystrixCommand(fallbackMethod = "fallback")
     @GetMapping("/latitude/{latitude}/longitude/{longitude}")
+    @HystrixCommand(fallbackMethod = "fallback", ignoreExceptions = WeatherfyException.class)
     public Mono<TrackSuggestion> getByLatitudeAndLongitude(@PathVariable Double latitude, @PathVariable Double longitude) {
     	TrackSuggestion.Builder builder = new TrackSuggestion.Builder();
     	return openWeatherMapClient.getCityByLatitudeAndLongitude(latitude, longitude)

@@ -16,11 +16,11 @@
 
 	<properties>
 		<java.version>11</java.version>
-		<character.encoding>UTF-8</character.encoding>
-		<project.build.sourceEncoding>${character.encoding}</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>${character.encoding}</project.reporting.outputEncoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
-		<maven.checkstyle.version>3.0.0</maven.checkstyle.version>
+		<docker.image.prefix>siilas</docker.image.prefix>
+		<cucumber.version>4.2.4</cucumber.version>
 	</properties>
 
 	<dependencies>
@@ -83,11 +83,33 @@
 			<artifactId>reactor-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+		
 		<dependency>
-			<groupId>org.springframework.restdocs</groupId>
-			<artifactId>spring-restdocs-mockmvc</artifactId>
+			<groupId>io.cucumber</groupId>
+		    <artifactId>cucumber-java</artifactId>
+		    <version>${cucumber.version}</version>
 			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>io.cucumber</groupId>
+		    <artifactId>cucumber-junit</artifactId>
+		    <version>${cucumber.version}</version>
+		    <scope>test</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>io.cucumber</groupId>
+		    <artifactId>cucumber-spring</artifactId>
+		    <version>${cucumber.version}</version>
+		    <scope>test</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.github.tomakehurst</groupId>
+		    <artifactId>wiremock-jre8</artifactId>
+		    <version>2.21.0</version>
+		    <scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -108,14 +130,10 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<mainClass></mainClass>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>${maven.checkstyle.version}</version>
 				<executions>
 					<execution>
 						<goals>
@@ -132,6 +150,9 @@
 				<groupId>com.spotify</groupId>
 				<artifactId>dockerfile-maven-plugin</artifactId>
 				<version>1.4.9</version>
+				<configuration>
+                	<repository>${docker.image.prefix}/${project.artifactId}</repository>
+            	</configuration>
 			</plugin>
 		</plugins>
 	</build>

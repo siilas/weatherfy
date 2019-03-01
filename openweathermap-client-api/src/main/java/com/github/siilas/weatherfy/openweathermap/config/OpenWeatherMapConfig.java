@@ -12,7 +12,9 @@ import lombok.Setter;
 @ConfigurationProperties(prefix = "openweathermap.app")
 public class OpenWeatherMapConfig {
 
-    private String host;
     private String id;
+    private String host;
+    private String port;
+    private String scheme;
     
 }

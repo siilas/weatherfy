@@ -9,9 +9,11 @@ server:
 # Spotify
 spotify: 
    app:
-      scheme: https
-      api-host: api.spotify.com
-      auth-host: accounts.spotify.com
+      scheme: http
+      api-host: localhost
+      api-port: 8191
+      auth-host: localhost
+      auth-port: 8192
       client-id: a6550dc64f2b475ca30ccbc264e880c7
       client-secret: 9ecf6275eae44ceaaf291db65ffac40a
 
@@ -19,5 +21,6 @@ spotify:
 openweathermap:
    app:
       scheme: http
-      host: api.openweathermap.org
+      host: localhost
+      port: 8193
       id: 2ab5374ec04969d8a11cd7bea88885e0
