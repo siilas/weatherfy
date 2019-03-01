@@ -1,5 +1,7 @@
 FROM adoptopenjdk/openjdk11:latest
 
+MAINTAINER Silas Maciel Ferreira
+
 VOLUME /tmp
 
 ARG JAR_FILE

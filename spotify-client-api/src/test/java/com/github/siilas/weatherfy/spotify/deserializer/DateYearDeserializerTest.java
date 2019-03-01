@@ -8,7 +8,7 @@ public class DateYearDeserializerTest {
     @Test
     public void shouldGetYearOfCompleteDate() {
         Integer year = new DateYearDeserializer().getYear("2018-05-02");
-        Assert.assertEquals(new Integer(2018), year);
+        Assert.assertEquals(Integer.valueOf(2018), year);
     }
 
 }

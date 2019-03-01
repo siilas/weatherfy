@@ -28,7 +28,7 @@ public class WeatherfyResource {
     private GenreSelectorService genreSelectorService;
 
     @GetMapping("/city/{city}")
-    //@HystrixCommand(fallbackMethod = "fallback")
+    @HystrixCommand(fallbackMethod = "fallback")
     public Mono<TrackSuggestion> getByCity(@PathVariable String city) {
     	TrackSuggestion.Builder builder = new TrackSuggestion.Builder();
     	return openWeatherMapClient.getCityByName(city)

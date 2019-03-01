@@ -37,18 +37,18 @@ public class SpotifyClient {
     
     private Mono<Authentication> authorization() {
     	return webClient.post()
-    		.uri(uri -> uri.host(config.getAuth())
-    				.scheme("https")
-    				.path("/api/token")
-    				.build())
-    		.header("Authorization", "Basic " + Base64.encodeBase64String(config.getAuthentication()))
-    		.body(fromFormData("grant_type", "client_credentials"))
-    		.retrieve()
-    		.onStatus(HttpStatusUtils::isNotSuccess, r -> {
-    			throw new AuthenticationException();
-    		})
-            .bodyToMono(Authentication.class)
-            .doOnEach(error -> log.error("Spotify authentication error", error));
+	    		.uri(uri -> uri.host(config.getAuth())
+	    				.scheme("https")
+	    				.path("/api/token")
+	    				.build())
+	    		.header("Authorization", "Basic " + Base64.encodeBase64String(config.getAuthentication()))
+	    		.body(fromFormData("grant_type", "client_credentials"))
+	    		.retrieve()
+	    		.onStatus(HttpStatusUtils::isNotSuccess, r -> {
+	    			throw new AuthenticationException();
+	    		})
+	            .bodyToMono(Authentication.class)
+	            .doOnError(error -> log.error("Spotify authentication error", error));
     }
     
     private Mono<Tracks> findTracks(Authentication auth, Genre genre) {
@@ -66,7 +66,7 @@ public class SpotifyClient {
 	    			throw new NoTracksFoundException();
 	    		})
 	        	.bodyToMono(Tracks.class)
-	        	.doOnEach(error -> log.error("Error getting tracks", error));
+	        	.doOnError(error -> log.error("Error getting tracks", error));
     }
 
 }
