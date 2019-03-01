@@ -13,7 +13,7 @@ import cucumber.api.java.pt.Dado;
 import cucumber.api.java.pt.E;
 import cucumber.api.java.pt.Entao;
 
-public class BusinessRulesSteps extends CucumberStepDefinitions {
+public class BusinessRulesSteps extends CucumberStepTools {
     
     private String cidade;
     

@@ -22,12 +22,11 @@ import com.github.siilas.weatherfy.mocks.SpotifyApiMocks;
 import com.github.siilas.weatherfy.mocks.SpotifyAuthMocks;
 import com.github.siilas.weatherfy.openweathermap.client.OpenWeatherMapClient;
 import com.github.siilas.weatherfy.spotify.client.SpotifyClient;
-import com.github.siilas.weatherfy.spotify.model.Genre;
 import com.github.tomakehurst.wiremock.WireMockServer;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
-public abstract class CucumberStepDefinitions {
+public abstract class CucumberStepTools {
 
     @Autowired
     protected WebClient webClient;
@@ -54,17 +53,15 @@ public abstract class CucumberStepDefinitions {
                     .withStatus(HttpStatus.SC_OK)
                     .withBody(SpotifyAuthMocks.SUCCESS_MOCK)));
         
-        for (Genre genre : Genre.values()) {
-            spotifyApiServer.stubFor(get(urlMatching(SpotifyClient.getRecommendationsPath() + "(.*?)"))
-                    .withHeader("Authorization", matching("(.*?)"))
-                    .withQueryParam("market", equalTo("BR"))
-                    .withQueryParam("limit", equalTo("10"))
-                    .withQueryParam("seed_genres", equalTo(genre.getValue()))
-                    .willReturn(aResponse()
-                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
-                        .withStatus(HttpStatus.SC_OK)
-                        .withBody(SpotifyApiMocks.SUCCESS_MOCK)));
-        }
+        spotifyApiServer.stubFor(get(urlMatching(SpotifyClient.getRecommendationsPath() + "(.*?)"))
+                .withHeader("Authorization", matching("(.*?)"))
+                .withQueryParam("market", equalTo("BR"))
+                .withQueryParam("limit", equalTo("10"))
+                .withQueryParam("seed_genres", matching("(.*?)"))
+                .willReturn(aResponse()
+                    .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+                    .withStatus(HttpStatus.SC_OK)
+                    .withBody(SpotifyApiMocks.SUCCESS_MOCK)));
     }
 
 }
