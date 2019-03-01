@@ -17,8 +17,8 @@ public class SpotifyConfig {
     private String clientId;
     private String clientSecret;
 
-    public String getAuthentication() {
-        return clientId + ":" + clientSecret;
+    public byte[] getAuthentication() {
+        return (clientId + ":" + clientSecret).getBytes();
     }
 
 }

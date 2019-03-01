@@ -1,6 +1,6 @@
 package com.github.siilas.weatherfy.core.http;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
 public final class HttpStatusUtils {
 
@@ -8,12 +8,12 @@ public final class HttpStatusUtils {
 		throw new IllegalStateException();
 	}
 	
-	public static boolean isNotFound(ResponseEntity<?> response) {
-		return response.getStatusCodeValue() == 404;
+	public static boolean isNotFound(HttpStatus status) {
+		return status.value() == 404;
 	}
 	
-	public static boolean isNotSuccess(ResponseEntity<?> response) {
-	    return response.getStatusCodeValue() != 200;
+	public static boolean isNotSuccess(HttpStatus status) {
+	    return status.value() != 200;
 	}
 	
 }

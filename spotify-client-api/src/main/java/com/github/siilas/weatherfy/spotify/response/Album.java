@@ -1,7 +1,5 @@
 package com.github.siilas.weatherfy.spotify.response;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.github.siilas.weatherfy.spotify.deserializer.DateYearDeserializer;
@@ -19,7 +17,5 @@ public class Album {
     @JsonProperty("release_date")
     @JsonDeserialize(using = DateYearDeserializer.class)
     private Integer releaseDate;
-
-    private List<Image> images;
 
 }

@@ -9,11 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.siilas.weatherfy.api.response.TrackSuggestion;
 import com.github.siilas.weatherfy.api.service.GenreSelectorService;
 import com.github.siilas.weatherfy.openweathermap.client.OpenWeatherMapClient;
-import com.github.siilas.weatherfy.openweathermap.response.City;
 import com.github.siilas.weatherfy.spotify.client.SpotifyClient;
-import com.github.siilas.weatherfy.spotify.model.Genre;
-import com.github.siilas.weatherfy.spotify.response.Tracks;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/songs")
@@ -29,41 +28,45 @@ public class WeatherfyResource {
     private GenreSelectorService genreSelectorService;
 
     @GetMapping("/city/{city}")
-    @HystrixCommand(fallbackMethod = "fallback")
-    public TrackSuggestion getByCity(@PathVariable String city) {
-        City reponse = openWeatherMapClient.getCityByName(city);
-        Genre genre = genreSelectorService.getGenre(reponse.getTemperature());
-        Tracks tracks = spotifyClient.getMusicByGenre(genre);
-        return TrackSuggestion.builder()
-                .city(reponse.getName())
-                .latitude(reponse.getCoordinates().getLatitude())
-                .longitude(reponse.getCoordinates().getLongitude())
-                .requestDate(reponse.getDate())
-                .temperature(reponse.getTemperature().getValue())
-                .genre(genre)
-                .tracks(tracks)
-                .build();
+    //@HystrixCommand(fallbackMethod = "fallback")
+    public Mono<TrackSuggestion> getByCity(@PathVariable String city) {
+    	TrackSuggestion.Builder builder = new TrackSuggestion.Builder();
+    	return openWeatherMapClient.getCityByName(city)
+        		.map(info -> {
+        			builder.city(info);
+        			return genreSelectorService.getGenre(info.getTemperature());
+    			})
+        		.flatMap(genre -> {
+        			builder.genre(genre);
+        			return spotifyClient.getMusicByGenre(genre);
+        		})
+        		.flatMap(tracks -> {
+        			builder.tracks(tracks);
+        			return Mono.just(builder.build());
+        		});
     }
 
     @HystrixCommand(fallbackMethod = "fallback")
     @GetMapping("/latitude/{latitude}/longitude/{longitude}")
-    public TrackSuggestion getByLatitudeAndLongitude(@PathVariable Double latitude, @PathVariable Double longitude) {
-        City reponse = openWeatherMapClient.getCityByLatitudeAndLongitude(latitude, longitude);
-        Genre genre = genreSelectorService.getGenre(reponse.getTemperature());
-        Tracks tracks = spotifyClient.getMusicByGenre(genre);
-        return TrackSuggestion.builder()
-                .city(reponse.getName())
-                .latitude(reponse.getCoordinates().getLatitude())
-                .longitude(reponse.getCoordinates().getLongitude())
-                .requestDate(reponse.getDate())
-                .temperature(reponse.getTemperature().getValue())
-                .genre(genre)
-                .tracks(tracks)
-                .build();
+    public Mono<TrackSuggestion> getByLatitudeAndLongitude(@PathVariable Double latitude, @PathVariable Double longitude) {
+    	TrackSuggestion.Builder builder = new TrackSuggestion.Builder();
+    	return openWeatherMapClient.getCityByLatitudeAndLongitude(latitude, longitude)
+        		.map(info -> {
+					builder.city(info);
+					return genreSelectorService.getGenre(info.getTemperature());
+				})
+				.flatMap(genre -> {
+					builder.genre(genre);
+					return spotifyClient.getMusicByGenre(genre);
+				})
+				.flatMap(tracks -> {
+					builder.tracks(tracks);
+					return Mono.just(builder.build());
+				});
     }
 
-    public String fallback() {
-        return "Error";
+    public TrackSuggestion fallback(String arg) {
+        return null;
     }
 
 }
