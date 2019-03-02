@@ -38,7 +38,7 @@ public class BusinessRulesSteps extends CucumberStepTools {
 
     @E("a temperatura esteja acima de {double} graus")
     public void eATemperaturaEstejaAcimaDeGraus(Double temperatura) {
-        doSuccessMocks(cidade, (temperatura + 1));
+    	mock(cidade, (temperatura + 1));
     }
 
     @Entao("deve sugerir músicas para festa")
@@ -49,7 +49,7 @@ public class BusinessRulesSteps extends CucumberStepTools {
 
     @E("a temperatura esteja entre {double} e {double} graus")
     public void eATemperaturaEstejaEntreEGraus(Double temperaturaMinima, Double temperaturaMaxima) {
-        doSuccessMocks(cidade, ThreadLocalRandom.current().nextDouble(temperaturaMinima, temperaturaMaxima));
+    	mock(cidade, ThreadLocalRandom.current().nextDouble(temperaturaMinima, temperaturaMaxima));
     }
 
     @Entao("deve sugerir músicas pop")
@@ -66,7 +66,7 @@ public class BusinessRulesSteps extends CucumberStepTools {
 
     @E("a temperatura esteja abaixo de {double} graus")
     public void eATemperaturaEstejaAbaixoDeGraus(Double temperatura) {
-        doSuccessMocks(cidade, (temperatura - 1));
+    	mock(cidade, (temperatura - 1));
     }
 
     @Entao("deve sugerir música clássica")
@@ -75,16 +75,9 @@ public class BusinessRulesSteps extends CucumberStepTools {
         Assert.assertEquals(Genre.CLASSICAL, response.getGenre());
     }
     
-    private TrackSuggestion getResponse() {
-        return webClient.get()
-                .uri(uri -> uri.scheme("http")
-                        .host("localhost")
-                        .port(8080)
-                        .path("/songs/city/" + cidade)
-                        .build())
-                .retrieve()
-                .bodyToMono(TrackSuggestion.class)
-                .block();
-    }
+	private TrackSuggestion getResponse() {
+		String url = "http://localhost:8080/songs/city/" + cidade;
+		return restTemplate.getForEntity(url, TrackSuggestion.class).getBody();
+	}
 
 }

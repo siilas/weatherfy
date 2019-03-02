@@ -15,37 +15,37 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestTemplate;
 
 import com.github.siilas.weatherfy.mocks.OpenWeatherMapMocks;
 import com.github.siilas.weatherfy.mocks.SpotifyApiMocks;
 import com.github.siilas.weatherfy.mocks.SpotifyAuthMocks;
 import com.github.siilas.weatherfy.openweathermap.client.OpenWeatherMapClient;
 import com.github.siilas.weatherfy.spotify.client.SpotifyClient;
-import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.junit.WireMockRule;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
 public abstract class CucumberStepTools {
 
     @Autowired
-    protected WebClient webClient;
+    protected RestTemplate restTemplate;
     
-    protected WireMockServer spotifyApiServer = new WireMockServer(options().port(8191));
-    protected WireMockServer spotifyAuthServer = new WireMockServer(options().port(8192));
-    protected WireMockServer openWeatherMapsServer = new WireMockServer(options().port(8193));
+    protected WireMockRule spotifyApiServer = new WireMockRule(options().port(8191));
+    protected WireMockRule spotifyAuthServer = new WireMockRule(options().port(8192));
+    protected WireMockRule openWeatherMapsServer = new WireMockRule(options().port(8193));
 
-    protected void doSuccessMocks(String city, Double temperature) {
+    protected void mock(String city, Double temperature) {
         openWeatherMapsServer.stubFor(get(urlMatching(OpenWeatherMapClient.getPath() + "(.*?)"))
                 .withQueryParam("appid", matching("(.*?)"))
-                .withQueryParam("q", matching("(.*?)"))
+                .withQueryParam("q", equalTo(city))
                 .willReturn(aResponse()
                     .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                     .withStatus(HttpStatus.SC_OK)
                     .withBody(OpenWeatherMapMocks.SUCCESS_MOCK
                             .replace("CITY_NAME", city)
                             .replace("TEMPERATURE", String.valueOf(temperature)))));
-        
+    
         spotifyAuthServer.stubFor(post(urlMatching(SpotifyClient.getAuthPath() + "(.*?)"))
                 .withHeader("Authorization", matching("(.*?)"))
                 .willReturn(aResponse()
@@ -55,8 +55,8 @@ public abstract class CucumberStepTools {
         
         spotifyApiServer.stubFor(get(urlMatching(SpotifyClient.getRecommendationsPath() + "(.*?)"))
                 .withHeader("Authorization", matching("(.*?)"))
-                .withQueryParam("market", equalTo("BR"))
-                .withQueryParam("limit", equalTo("10"))
+                .withQueryParam("market", matching("(.*?)"))
+                .withQueryParam("limit", matching("(.*?)"))
                 .withQueryParam("seed_genres", matching("(.*?)"))
                 .willReturn(aResponse()
                     .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)

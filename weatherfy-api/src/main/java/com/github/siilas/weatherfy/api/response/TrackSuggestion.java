@@ -18,7 +18,8 @@ public class TrackSuggestion {
     private LocalDateTime requestDate;
     private Genre genre;
     private Tracks tracks;
-
+    private String message;
+    
     public static class Builder {
 
     	private City city;

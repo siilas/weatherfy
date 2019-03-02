@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="css/styles.css" />
 		
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/axios.min.js"></script>
 		<script type="text/javascript" src="js/scripts.js"></script>
 		
 		<title>Weatherfy</title>
@@ -17,12 +18,12 @@
 	<body>
 		<div class="container text-center">
 			<div>
-				<img src="images/logo.png" class="img-fluid mt-5" alt="Weatherfy" />
+				<img src="images/logo.png" width="128" height="128" class="img-fluid mt-5" alt="Weatherfy" />
 				<h1 class="mt-4 font-weight-bold">Weatherfy</h1>
 				<h3 class="mt-2">Olá! O Weatherfy é uma API que sugere músicas do Spotify de acordo com a temperatura da cidade requisitada.</h3>
 			</div>
 			<div>
-				<div class="mt-5">
+				<div class="mt-5 mb-2">
  					<select class="custom-select text-center" id="choice-method" onchange="showForm()">
 					   <option value="" selected>Escolha o método de busca</option>
 					   <option value="NAME">Nome</option>
@@ -30,15 +31,47 @@
  					</select>
 				</div>
 			</div>
-			<div id="form-name" style="display: none;">
-				<form>
-				
+			<div id="div-name" style="display: none;">
+				<form id="form-name" class="mb-5">
+					<div class="form-group">
+					    <input type="text" class="form-control text-center" id="city-name" placeholder="Nome da cidade">
+				  	</div>
+					<div class="form-group">
+						<div class="alert alert-danger" id="name-alert" style="display: none;">
+  							Hey, acho que você esqueceu de informar a cidade!
+						</div>						
+					</div>
+				  	<div class="form-group">
+						<button type="button" onclick="getSongsByCityName()" class="btn btn-secondary">Go!</button>
+					</div>
 				</form>
 			</div>
-			<div id="form-lat-and-long" style="display: none;">
-				<form>
-				
+			<div id="div-lat-and-long" style="display: none;">
+				<form id="form-lat-and-long" class="mb-5">
+					<div class="form-group">
+						<div class="row">
+							<div class="col">
+						    	<input type="number" class="form-control text-center" id="latitude" placeholder="Latitude">
+						    </div>
+						    <div class="col">
+						    	<input type="number" class="form-control text-center" id="longitude" placeholder="Longitude">
+						    </div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="alert alert-danger" id="lat-and-lon-alert" style="display: none;">
+  							Hey, acho que você esqueceu de informar a latitude e/ou longitude!
+						</div>
+					</div>
+					<div class="form-group">
+						<button type="button" onclick="getSongsByLatAndLon()" class="btn btn-secondary">Go!</button>
+					</div>
 				</form>
+			</div>
+			<div id="div-songs" style="display: none;">
+				<div class="alert alert-danger" id="songs-alert" style="display: none;">
+					Ocorreu um erro: <span id="msg-error"></span> 
+				</div>
 			</div>
 		</div>
 	</body>

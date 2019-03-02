@@ -4,9 +4,7 @@ MAINTAINER Silas Maciel Ferreira
 
 VOLUME /tmp
 
-ARG JAR_FILE
-
-COPY ${JAR_FILE} app.jar
+COPY target/*.jar app.jar
 
 EXPOSE 8080
 
