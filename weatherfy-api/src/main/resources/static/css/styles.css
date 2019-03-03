@@ -4,3 +4,19 @@ body {
 	background-color: #0082fe;
 	color: white;
 }
+
+table {
+	color: white !important;
+}
+
+#table-title {
+	color: white;
+	text-align: center;
+	caption-side: top;
+	font-weight: bold;
+}
+
+.footer a {
+	color: white;
+	font-weight: bold;
+}

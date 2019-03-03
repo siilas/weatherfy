@@ -5,6 +5,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.github.siilas.weatherfy.core.exception.GenericException;
 import com.github.siilas.weatherfy.core.http.HttpStatusUtils;
 import com.github.siilas.weatherfy.openweathermap.config.OpenWeatherMapConfig;
 import com.github.siilas.weatherfy.openweathermap.exception.CityNotFoundException;
@@ -42,6 +43,9 @@ public class OpenWeatherMapClient {
 				.onStatus(HttpStatusUtils::isNotFound, r -> {
 					throw new CityNotFoundException();
 				})
+				.onStatus(HttpStatusUtils::isNotSuccess, r -> {
+					throw new GenericException("Error getting city");
+				})
 				.bodyToMono(City.class)
 				.doOnError(error -> log.error("Error getting city by name", error));
     }
@@ -61,6 +65,9 @@ public class OpenWeatherMapClient {
 				.retrieve()
 				.onStatus(HttpStatusUtils::isNotFound, r -> {
 					throw new CityNotFoundException();
+				})
+				.onStatus(HttpStatusUtils::isNotSuccess, r -> {
+					throw new GenericException("Error getting city");
 				})
 				.bodyToMono(City.class)
 				.doOnError(error -> log.error("Error getting city by latitude and longitude", error));

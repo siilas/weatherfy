@@ -1,4 +1,4 @@
-package com.github.siilas.weatherfy;
+package com.github.siilas.weatherfy.businessrules;
 
 import org.junit.runner.RunWith;
 

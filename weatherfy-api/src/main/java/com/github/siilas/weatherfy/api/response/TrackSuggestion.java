@@ -1,9 +1,11 @@
 package com.github.siilas.weatherfy.api.response;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.github.siilas.weatherfy.openweathermap.response.City;
 import com.github.siilas.weatherfy.spotify.model.Genre;
+import com.github.siilas.weatherfy.spotify.response.Track;
 import com.github.siilas.weatherfy.spotify.response.Tracks;
 
 import lombok.Data;
@@ -17,7 +19,7 @@ public class TrackSuggestion {
     private Double temperature;
     private LocalDateTime requestDate;
     private Genre genre;
-    private Tracks tracks;
+    private List<Track> tracks;
     private String message;
     
     public static class Builder {
@@ -49,7 +51,7 @@ public class TrackSuggestion {
     		response.setRequestDate(city.getDate());
     		response.setTemperature(city.getTemperature().getValue());
     		response.setGenre(genre);
-    		response.setTracks(tracks);
+    		response.setTracks(tracks.getTracks());
     		return response;
     	}
     	

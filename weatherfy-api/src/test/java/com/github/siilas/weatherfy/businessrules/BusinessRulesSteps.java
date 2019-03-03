@@ -1,4 +1,4 @@
-package com.github.siilas.weatherfy;
+package com.github.siilas.weatherfy.businessrules;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -13,7 +13,7 @@ import cucumber.api.java.pt.Dado;
 import cucumber.api.java.pt.E;
 import cucumber.api.java.pt.Entao;
 
-public class BusinessRulesSteps extends CucumberStepTools {
+public class BusinessRulesSteps extends BusinessRulesTools {
     
     private String cidade;
     
@@ -43,7 +43,7 @@ public class BusinessRulesSteps extends CucumberStepTools {
 
     @Entao("deve sugerir músicas para festa")
     public void entaoDeveSugerirMusicasParaFesta() {
-        TrackSuggestion response = getResponse();
+        TrackSuggestion response = getResponse(this.cidade);
         Assert.assertEquals(Genre.PARTY, response.getGenre());
     }
 
@@ -54,13 +54,13 @@ public class BusinessRulesSteps extends CucumberStepTools {
 
     @Entao("deve sugerir músicas pop")
     public void entaoDeveSugerirMusicasPop() {
-        TrackSuggestion response = getResponse();
+        TrackSuggestion response = getResponse(this.cidade);
         Assert.assertEquals(Genre.POP, response.getGenre());
     }
 
     @Entao("deve sugerir rock and roll")
     public void entaoDeveSugerirRockAndRoll() {
-        TrackSuggestion response = getResponse();
+        TrackSuggestion response = getResponse(this.cidade);
         Assert.assertEquals(Genre.ROCK, response.getGenre());
     }
 
@@ -71,13 +71,8 @@ public class BusinessRulesSteps extends CucumberStepTools {
 
     @Entao("deve sugerir música clássica")
     public void entaoDeveSugerirMusicaClassica() {
-        TrackSuggestion response = getResponse();
+        TrackSuggestion response = getResponse(this.cidade);
         Assert.assertEquals(Genre.CLASSICAL, response.getGenre());
     }
     
-	private TrackSuggestion getResponse() {
-		String url = "http://localhost:8080/songs/city/" + cidade;
-		return restTemplate.getForEntity(url, TrackSuggestion.class).getBody();
-	}
-
 }

@@ -16,4 +16,8 @@ public final class HttpStatusUtils {
 	    return status.value() != 200;
 	}
 	
+	public static boolean isNotAuthorized(HttpStatus status) {
+	    return status.value() == 401;
+	}
+	
 }

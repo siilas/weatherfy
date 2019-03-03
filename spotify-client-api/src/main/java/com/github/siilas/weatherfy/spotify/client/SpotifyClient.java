@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.github.siilas.weatherfy.core.exception.GenericException;
 import com.github.siilas.weatherfy.core.http.HttpStatusUtils;
 import com.github.siilas.weatherfy.spotify.config.SpotifyConfig;
 import com.github.siilas.weatherfy.spotify.exception.AuthenticationException;
@@ -53,9 +54,12 @@ public class SpotifyClient {
 	    		.header("Authorization", "Basic " + Base64.encodeBase64String(config.getAuthentication()))
 	    		.body(fromFormData("grant_type", "client_credentials"))
 	    		.retrieve()
-	    		.onStatus(HttpStatusUtils::isNotSuccess, r -> {
+	    		.onStatus(HttpStatusUtils::isNotAuthorized, r -> {
 	    			throw new AuthenticationException();
 	    		})
+	    		.onStatus(HttpStatusUtils::isNotSuccess, r -> {
+					throw new GenericException("Authentication error");
+				})
 	            .bodyToMono(Authentication.class)
 	            .doOnError(error -> log.error("Spotify authentication error", error));
     }
@@ -72,9 +76,12 @@ public class SpotifyClient {
 	    				.build())
 	        	.header("Authorization", "Bearer " + auth.getToken())
 	        	.retrieve()
-	        	.onStatus(HttpStatusUtils::isNotSuccess, r -> {
+	        	.onStatus(HttpStatusUtils::isNotFound, r -> {
 	    			throw new NoTracksFoundException();
 	    		})
+	        	.onStatus(HttpStatusUtils::isNotSuccess, r -> {
+					throw new GenericException("Error getting tracks");
+				})
 	        	.bodyToMono(Tracks.class)
 	        	.doOnError(error -> log.error("Error getting tracks", error));
     }

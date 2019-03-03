@@ -42,17 +42,58 @@ function isEmpty(value) {
 }
 
 function getSongs(url) {
+	document.getElementById("loading").style.display = "";
 	axios({
 	  method: 'get',
 	  url: '/songs' + url,
 	  responseType: 'json'
 	}).then(response => {
+		document.getElementById("loading").style.display = "none";
 		document.getElementById("div-songs").style.display = "";
 		document.getElementById("songs-alert").style.display = "none";
-		alert("Deu certo");
+		setSongs(response.data);
+		document.getElementById("table-songs").style.display = "";
 	}).catch(error => {
+		document.getElementById("loading").style.display = "none";
 		document.getElementById("div-songs").style.display = "";
 		document.getElementById("songs-alert").style.display = "";
-		document.getElementById("msg-error").innerHTML = error;
+		if (error.response) {
+			document.getElementById("msg-error").innerHTML = error.response.data.message + " (" + error.response.status + ")";
+		} else {
+			document.getElementById("msg-error").innerHTML = error;
+		}
+		document.getElementById("table-songs").style.display = "none";
 	});
+}
+
+function setSongs(songs) {
+	document.getElementById("table-title").innerHTML = songs.city + " / " 
+			+ songs.latitude + ", " + songs.longitude + " / "
+			+ songs.temperature + "° / " 
+			+ songs.genre;
+	let html = "";
+	songs.tracks.forEach(function(song) {
+		html += "<tr>"
+			+ "	<td>"
+			+ song.name
+			+ "	</td>"
+			+ "	<td>"
+			+ getArtistsNames(song.artists)
+			+ "	</td>"
+			+ "	<td>"
+			+ "		<a href=\"" + song.external_urls.spotify + "\" target=\"_blank\">"
+			+ "			<img src=\"images/spotify.png\" width=\"32\" height=\"32\" title=\"Ouvir\" />"
+			+ "		</a>"
+			+ "	</td>"
+			+ "</tr>";
+	});
+	document.getElementById("songs").innerHTML = html;
+}
+
+function getArtistsNames(artists) {
+	let name = [];
+	artists.forEach(function(artist) {
+		name.push(artist.name);
+	});
+	return name.join(", ");
 }
