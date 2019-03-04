@@ -87,6 +87,7 @@ A busca pode ser feita pela interface gráfica, mas também pode ser diretamente
 
 - Melhorar os casos de teste e aumentar a cobertura dos mesmos
 - Melhorar o fallback, talvez utilizando um cache/banco de dados
-- Utilizar docker não só no desenvolvimento, mas também em produção/heroku
+- Utilizar docker não só no desenvolvimento, mas também em produção (Heroku)
+- Permitir que o usuário defina a quantidade de músicas que serão selecionada, como também popularidade e outros parâmetros
 
 **Até mais e obrigado por todos os peixes! :)**
