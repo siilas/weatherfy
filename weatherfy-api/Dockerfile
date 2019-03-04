@@ -4,7 +4,7 @@ MAINTAINER Silas Maciel Ferreira
 
 VOLUME /tmp
 
-COPY target/*.jar app.jar
+COPY target/weatherfy-api.jar app.jar
 
 EXPOSE 8080
 

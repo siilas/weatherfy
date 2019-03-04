@@ -1,0 +1,13 @@
+version: '2.2'
+services:
+  weatherfy:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    networks:
+      - networkapi
+
+networks:
+  networkapi:
