@@ -1,1 +1,1 @@
-web: java -jar weatherfy-api/target/weatherfy-api.jar -Dserver.port=$PORT
+web: java $JAVA_OPTS -Dserver.port=$PORT -jar weatherfy-api/target/weatherfy-api.jar
