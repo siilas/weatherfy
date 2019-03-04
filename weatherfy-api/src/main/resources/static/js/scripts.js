@@ -67,10 +67,14 @@ function getSongs(url) {
 }
 
 function setSongs(songs) {
-	document.getElementById("table-title").innerHTML = songs.city + " / " 
+	if (songs.message) {
+		document.getElementById("table-title").innerHTML = songs.message
+	} else {
+		document.getElementById("table-title").innerHTML = songs.city + " / " 
 			+ songs.latitude + ", " + songs.longitude + " / "
 			+ songs.temperature + "° / " 
 			+ songs.genre;
+	}
 	let html = "";
 	songs.tracks.forEach(function(song) {
 		html += "<tr>"

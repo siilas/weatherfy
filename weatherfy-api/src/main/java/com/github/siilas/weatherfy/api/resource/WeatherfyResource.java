@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.siilas.weatherfy.api.response.TrackSuggestion;
 import com.github.siilas.weatherfy.api.response.TrackSuggestionFallback;
-import com.github.siilas.weatherfy.api.service.GenreSelectorService;
-import com.github.siilas.weatherfy.openweathermap.client.OpenWeatherMapClient;
-import com.github.siilas.weatherfy.spotify.client.SpotifyClient;
+import com.github.siilas.weatherfy.api.service.TracksService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,31 +22,12 @@ import reactor.core.publisher.Mono;
 public class WeatherfyResource {
 
     @Autowired
-    private SpotifyClient spotifyClient;
-
-    @Autowired
-    private OpenWeatherMapClient openWeatherMapClient;
-
-    @Autowired
-    private GenreSelectorService genreSelectorService;
+    private TracksService tracksService;
 
     @GetMapping("/city/{city}")
     @ApiOperation("Retorna músicas de acordo com a temperatura")
     public Mono<TrackSuggestion> getByCity(@PathVariable @ApiParam String city) {
-        TrackSuggestion.Builder builder = new TrackSuggestion.Builder();
-        return HystrixCommands.from(openWeatherMapClient.getCityByName(city)
-                .map(info -> {
-                    builder.city(info);
-                    return genreSelectorService.getGenre(info.getTemperature());
-                })
-                .flatMap(genre -> {
-                    builder.genre(genre);
-                    return spotifyClient.getMusicByGenre(genre);
-                })
-                .flatMap(tracks -> {
-                    builder.tracks(tracks);
-                    return Mono.just(builder.build());
-                }))
+        return HystrixCommands.from(tracksService.getByCity(city))
         		.fallback(fallbackByName(city))
             	.commandName("getByCity")
             	.toMono();
@@ -58,20 +37,7 @@ public class WeatherfyResource {
     @ApiOperation("Retorna músicas de acordo com a temperatura")
     public Mono<TrackSuggestion> getByLatitudeAndLongitude(@PathVariable @ApiParam Double latitude,
             @PathVariable @ApiParam Double longitude) {
-        TrackSuggestion.Builder builder = new TrackSuggestion.Builder();
-        return HystrixCommands.from(openWeatherMapClient.getCityByLatitudeAndLongitude(latitude, longitude)
-                .map(info -> {
-                    builder.city(info);
-                    return genreSelectorService.getGenre(info.getTemperature());
-                })
-                .flatMap(genre -> {
-                    builder.genre(genre);
-                    return spotifyClient.getMusicByGenre(genre);
-                })
-                .flatMap(tracks -> {
-                    builder.tracks(tracks);
-                    return Mono.just(builder.build());
-                }))
+        return HystrixCommands.from(tracksService.getByLatitudeAndLongitude(latitude, longitude))
         		.fallback(fallbackByLatitudeAndLongitude(latitude, longitude))
             	.commandName("getByLatitudeAndLongitude")
             	.toMono();

@@ -1,12 +1,12 @@
 package com.github.siilas.weatherfy.api.service;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.github.siilas.weatherfy.api.exception.GenreNotFoundException;
 import com.github.siilas.weatherfy.openweathermap.response.Temperature;
 import com.github.siilas.weatherfy.spotify.model.Genre;
 
-@Component
+@Service
 public class GenreSelectorService {
 
     public Genre getGenre(Temperature temperature) {
