@@ -64,6 +64,8 @@ E por último, para que seja possível testar/acessar a API sem precisar fazer o
 
 # URLs do projeto
 
+Segue lista com todas as URLs do projeto:
+
 | URL | Descrição |
 | --- | --------- |
 | / | Interface gráfica |
