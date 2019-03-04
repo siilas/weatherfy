@@ -71,7 +71,7 @@ E por último, para que seja possível testar/acessar a API sem precisar fazer o
 | /songs/city/{city} | Serviço que busca as músicas pelo nome da cidade |
 | /songs/latitude/{latitude}/longitude/{longitude} | Serviço que busca as músicas por latitude e longitude |
 
-# Acesso/demo e exemplos de uso
+# Acesso e exemplos de uso
 
 A API pode acessada pelo seguinte endereço: 
 
@@ -89,4 +89,4 @@ A busca pode ser feita pela interface gráfica, mas também pode ser diretamente
 - Melhorar o fallback, talvez utilizando um cache/banco de dados
 - Utilizar docker não só no desenvolvimento, mas também em produção/heroku
 
-**Até mais e obrigado por todos os peixes!**
+**Até mais e obrigado por todos os peixes! :)**
