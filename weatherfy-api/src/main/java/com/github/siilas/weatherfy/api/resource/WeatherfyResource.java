@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.siilas.weatherfy.api.response.TrackSuggestion;
 import com.github.siilas.weatherfy.api.response.TrackSuggestionFallback;
 import com.github.siilas.weatherfy.api.service.TracksService;
+import com.netflix.hystrix.HystrixCommandProperties;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,6 +22,8 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/songs")
 public class WeatherfyResource {
 
+	private static final int HYSTRIX_TIMEOUT = 7000;
+	
     @Autowired
     private TracksService tracksService;
 
@@ -28,8 +31,11 @@ public class WeatherfyResource {
     @ApiOperation("Retorna músicas de acordo com a temperatura")
     public Mono<TrackSuggestion> getByCity(@PathVariable @ApiParam String city) {
         return HystrixCommands.from(tracksService.getByCity(city))
-        		.fallback(fallbackByName(city))
+        		.fallback(fallback())
             	.commandName("getByCity")
+            	.commandProperties(HystrixCommandProperties
+            			.Setter()
+            			.withExecutionTimeoutInMilliseconds(HYSTRIX_TIMEOUT))
             	.toMono();
     }
 
@@ -38,16 +44,15 @@ public class WeatherfyResource {
     public Mono<TrackSuggestion> getByLatitudeAndLongitude(@PathVariable @ApiParam Double latitude,
             @PathVariable @ApiParam Double longitude) {
         return HystrixCommands.from(tracksService.getByLatitudeAndLongitude(latitude, longitude))
-        		.fallback(fallbackByLatitudeAndLongitude(latitude, longitude))
+        		.fallback(fallback())
             	.commandName("getByLatitudeAndLongitude")
+            	.commandProperties(HystrixCommandProperties
+            			.Setter()
+            			.withExecutionTimeoutInMilliseconds(HYSTRIX_TIMEOUT))
             	.toMono();
     }
 
-    public Mono<TrackSuggestion> fallbackByName(String city) {
-        return Mono.just(TrackSuggestionFallback.fallBack());
-    }
-
-    public Mono<TrackSuggestion> fallbackByLatitudeAndLongitude(Double latitude, Double longitude) {
+    public Mono<TrackSuggestion> fallback() {
         return Mono.just(TrackSuggestionFallback.fallBack());
     }
 
