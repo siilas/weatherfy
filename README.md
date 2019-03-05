@@ -36,7 +36,14 @@ E alguns dos padrões de projeto e arquiteturais utilizados:
 
 # Instalação
 
-Depois de baixar o projeto e instalar o Java 11, Docker, Maven e basta executar o seguinte comando na pasta raiz do projeto para que o Maven baixe as dependências e faça o build:
+Depois de baixar o projeto, rode o script (somente para Linux por enquanto) para verificar o Java, Docker e Docker Compose:
+
+
+```sh
+sh verification.sh
+```
+
+Deposi disso, basta executar o seguinte comando na pasta raiz do projeto para que o Maven baixe as dependências e faça o build:
 
 ```sh
 ./mvnw clean install
@@ -91,5 +98,6 @@ A busca pode ser feita pela interface gráfica, mas também pode ser diretamente
 - Melhorar o fallback, talvez utilizando um cache/banco de dados
 - Utilizar docker não só no desenvolvimento, mas também em produção (Heroku)
 - Permitir que o usuário defina a quantidade de músicas que serão selecionada, como também popularidade e outros parâmetros
+- Melhorar o script de verificação e criar uma versão para Windows
 
 **Até mais e obrigado por todos os peixes! :)**
