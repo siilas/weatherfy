@@ -63,9 +63,9 @@ http://localhost:8080
 
 # O projeto
 
-A ideial inicial era que o projeto fosse somente uma API que busca as músicas de acordo com a temperatura da cidade requisitada, e posteriormente uma interface foi incluída, para que o usuário possa fazer a busca de forma amigável. Para isso foram escolhidos os utilizados o Thymeleaf (engine de templates) e o Bootstrap (componentes de interface e front-end), ambos pela facilidade de uso.
+A ideial inicial era que o projeto fosse somente uma API que busca as músicas de acordo com a temperatura da cidade requisitada, mas posteriormente uma interface gráfica foi incluída, para que o usuário possa fazer a busca de forma amigável. Para isso foram utilizados o Thymeleaf (engine de templates) e o Bootstrap (componentes de interface e front-end), ambos pela facilidade de uso.
 
-Para o back-end, foi escolhido o Spring Boot, pela maturidade do framework e todas a ferramentas, facilidades e integração com outros frameworks e tecnologias que o mesmo oferece. As APIs foram desenvolvidas de forma reativa para que sua resposta seja mais rápida e também foi utilizado o Hystrix (circuit breaker) para que a API seja tolerante a falha. E o BDD foi utilizado na parte de testes para validação das regras de negócio.
+Para o back-end foi escolhido o Spring Boot, pela maturidade do framework e todas as ferramentas, facilidades e integração com outros frameworks e tecnologias que o mesmo oferece. A API foi desenvolvida de forma reativa para que sua resposta seja mais rápida e também foi utilizado o Hystrix (circuit breaker) para que seja tolerante a falha. E o BDD (Cucumber e WireMock) foi utilizado na parte de testes para validação das regras de negócio.
 
 E por último, para que seja possível testar/acessar a API sem precisar fazer o download e instalação, foi feito deploy do app no Heroku. E você pode acessar clicando [aqui](https://weatherfy.herokuapp.com/).
 
