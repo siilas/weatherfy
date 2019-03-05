@@ -101,3 +101,16 @@ function getArtistsNames(artists) {
 	});
 	return name.join(", ");
 }
+
+function verifySubmit(event, form) {
+	let submit = (event.keyCode ? event.keyCode : event.which) == 13;
+	if (submit && ("NAME" === form)) {
+		getSongsByCityName();
+	} else if (submit && ("LAT_AND_LONG" === form)) {
+		getSongsByLatAndLon();
+	} 
+	if (submit) {
+		event.preventDefault();
+		return false;
+	}
+}
