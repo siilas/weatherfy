@@ -20,7 +20,8 @@ O projeto foi feito utilizando as seguintes tecnologias e frameworks:
 - [Swagger](https://swagger.io)
 - [Reactor](https://projectreactor.io)
 - [Thymeleaf](https://www.thymeleaf.org)
-- [Bootstrap](https://getbootstrap.com/)
+- [Bootstrap](https://getbootstrap.com)
+- [JMeter](https://jmeter.apache.org)
 
 Para buscar a temperatura e as músicas, são utilizadas as seguintes APIs:
 
