@@ -20,6 +20,7 @@ O projeto foi feito utilizando as seguintes tecnologias e frameworks:
 - [Swagger](https://swagger.io)
 - [Reactor](https://projectreactor.io)
 - [Thymeleaf](https://www.thymeleaf.org)
+- [Bootstrap](https://getbootstrap.com/)
 
 Para buscar a temperatura e as músicas, são utilizadas as seguintes APIs:
 
@@ -35,4 +36,60 @@ E alguns dos padrões de projeto e arquiteturais utilizados:
 
 # Instalação
 
-# Exemplo de uso
+Depois de baixar o projeto e instalar o Java 11, Docker, Maven e basta executar o seguinte comando na pasta raiz do projeto para que o Maven baixe as dependências e faça o build:
+
+```sh
+./mvnw clean install
+```
+
+E para executar e rodar o projeto execute o seguinte comando:
+
+```sh
+docker-compose up
+```
+
+Depois basta abrir o browser e acessar o seguinte endereço:
+
+```sh
+http://localhost:8080
+```
+
+# O projeto
+
+A ideial inicial era que o projeto fosse somente uma API que busca as músicas de acordo com a temperatura da cidade requisitada, e posteriormente uma interface foi incluída, para que o usuário possa fazer a busca de forma amigável. Para isso foram escolhidos os utilizados o Thymeleaf (engine de templates) e o Bootstrap (componentes de interface e front-end), ambos pela facilidade de uso.
+
+Para o back-end, foi escolhido o Spring Boot, pela maturidade do framework e todas a ferramentas, facilidades e integração com outros frameworks e tecnologias que o mesmo oferece. As APIs foram desenvolvidas de forma reativa para que sua resposta seja mais rápida e também foi utilizado o Hystrix (circuit breaker) para que a API seja tolerante a falha. E o BDD foi utilizado na parte de testes para validação das regras de negócio.
+
+E por último, para que seja possível testar/acessar a API sem precisar fazer o download e instalação, foi feito deploy do app no Heroku. E você pode acessar clicando [aqui](https://weatherfy.herokuapp.com/).
+
+# URLs do projeto
+
+Segue lista com todas as URLs do projeto:
+
+| URL | Descrição |
+| --- | --------- |
+| / | Interface gráfica |
+| /docs | Documentação do serviços REST |
+| /songs/city/{city} | Serviço que busca as músicas pelo nome da cidade |
+| /songs/latitude/{latitude}/longitude/{longitude} | Serviço que busca as músicas por latitude e longitude |
+
+# Acesso e exemplos de uso
+
+A API pode acessada pelo seguinte endereço: 
+
+[https://weatherfy.herokuapp.com](https://weatherfy.herokuapp.com)
+
+A busca pode ser feita pela interface gráfica, mas também pode ser diretamente nos serviços como nos exemplos abaixo:
+
+[https://weatherfy.herokuapp.com/songs/city/bauru](https://weatherfy.herokuapp.com/songs/city/bauru)
+
+[https://weatherfy.herokuapp.com/songs/latitude/-22.6/longitude/-48.8](https://weatherfy.herokuapp.com/songs/latitude/-22.6/longitude/-48.8)
+
+# Ideias de melhorias no projeto
+
+- Melhorar os casos de teste e aumentar a cobertura dos mesmos
+- Melhorar o fallback, talvez utilizando um cache/banco de dados
+- Utilizar docker não só no desenvolvimento, mas também em produção (Heroku)
+- Permitir que o usuário defina a quantidade de músicas que serão selecionada, como também popularidade e outros parâmetros
+
+**Até mais e obrigado por todos os peixes! :)**
