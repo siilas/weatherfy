@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.github.siilas</groupId>
-	<artifactId>weatherfy-core</artifactId>
+	<artifactId>weatherfy-commons</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<parent>

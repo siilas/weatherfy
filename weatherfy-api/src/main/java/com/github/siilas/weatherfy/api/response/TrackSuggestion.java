@@ -9,6 +9,7 @@ import com.github.siilas.weatherfy.spotify.response.Track;
 import com.github.siilas.weatherfy.spotify.response.Tracks;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 public class TrackSuggestion {
@@ -54,6 +55,16 @@ public class TrackSuggestion {
     		response.setTracks(tracks.getTracks());
     		return response;
     	}
+    	
+    }
+    
+    @Data
+    @NoArgsConstructor
+    public static class TracksWrapper {
+    	
+    	private City city;
+    	private Genre genre;
+    	private Tracks tracks;
     	
     }
     

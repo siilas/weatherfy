@@ -1,4 +1,4 @@
-package com.github.siilas.weatherfy.nonfuncionalrequirements;
+package com.github.siilas.weatherfy.api.nonfuncionalrequirements;
 
 import org.junit.Assert;
 

@@ -1,4 +1,4 @@
-package com.github.siilas.weatherfy.mocks;
+package com.github.siilas.weatherfy.api.mocks;
 
 public final class SpotifyApiMocks {
 

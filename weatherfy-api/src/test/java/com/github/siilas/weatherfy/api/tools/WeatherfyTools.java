@@ -1,4 +1,4 @@
-package com.github.siilas.weatherfy.tools;
+package com.github.siilas.weatherfy.api.tools;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
@@ -13,10 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 
+import com.github.siilas.weatherfy.api.mocks.OpenWeatherMapMocks;
+import com.github.siilas.weatherfy.api.mocks.SpotifyApiMocks;
+import com.github.siilas.weatherfy.api.mocks.SpotifyAuthMocks;
 import com.github.siilas.weatherfy.api.response.TrackSuggestion;
-import com.github.siilas.weatherfy.mocks.OpenWeatherMapMocks;
-import com.github.siilas.weatherfy.mocks.SpotifyApiMocks;
-import com.github.siilas.weatherfy.mocks.SpotifyAuthMocks;
 import com.github.siilas.weatherfy.openweathermap.client.OpenWeatherMapClient;
 import com.github.siilas.weatherfy.spotify.client.SpotifyClient;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;

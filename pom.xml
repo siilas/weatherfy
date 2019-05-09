@@ -33,7 +33,7 @@
 
 	<modules>
 		<module>weatherfy-api</module>
-		<module>weatherfy-core</module>
+		<module>weatherfy-commons</module>
 		<module>spotify-client-api</module>
 		<module>openweathermap-client-api</module>
 	</modules>

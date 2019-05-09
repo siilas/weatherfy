@@ -24,7 +24,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.github.siilas</groupId>
-			<artifactId>weatherfy-core</artifactId>
+			<artifactId>weatherfy-commons</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

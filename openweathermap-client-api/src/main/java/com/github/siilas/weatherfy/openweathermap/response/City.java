@@ -6,9 +6,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.github.siilas.weatherfy.openweathermap.deserializer.LocalDateTimeDeserializer;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class City {
 
 	private String name;
