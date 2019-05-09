@@ -33,7 +33,7 @@ function getSongsByLatAndLon() {
 		document.getElementById("lat-and-lon-alert").style.display = "";
 	} else {
 		document.getElementById("lat-and-lon-alert").style.display = "none";
-		getSongs('/lat/' + latitude + '/lon/' + longitude);
+		getSongs('/latitude/' + latitude + '/longitude/' + longitude);
 	}
 }
 
