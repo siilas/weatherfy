@@ -1,5 +1,7 @@
 # Weatherfy
 
+[![Build Status](https://travis-ci.org/siilas/weatherfy.svg?branch=master)](https://travis-ci.org/siilas/weatherfy)
+
 Olá! O Weatherfy é uma API que sugere músicas do Spotify de acordo com a temperatura da cidade requisitada. E segue as seguintes regras:
 
 - Se a temperatura for maior que 30 graus, sugerir músicas para festa
