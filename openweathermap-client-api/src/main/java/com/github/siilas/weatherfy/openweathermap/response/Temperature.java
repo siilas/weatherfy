@@ -21,7 +21,7 @@ public class Temperature {
 	}
 	
 	public boolean isBetween15And30Degrees() {
-		return (14 <= value) && (30 >= value);
+		return (15 <= value) && (30 >= value);
 	}
 	
 	public boolean isBetween10And14Degrees() {
